@@ -5,9 +5,9 @@
 `sudo mkdir -p /share/public_files /share/protected_files` create public and protected folders\
 `sudo chown -R smbuser:smbgroup /share/public_files` change user and group ownership\
 `sudo chmod -R g+w /share` modify group level permission to write\
-`sudo systemctl start smdb` start samba\
+`sudo systemctl start smdb` start samba
 
-create `smb.conf` and `shares.conf` in /etc/samba/\
+create `smb.conf` and `shares.conf` in /etc/samba/
 > Note! rename existing smb.conf to smb.conf.bak
 
 
