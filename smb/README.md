@@ -1,21 +1,13 @@
-`sudo apt install samba` install samba
+`sudo apt install samba` install samba\
+`sudo systemctl stop smbd` stop samba\
+`sudo groupadd --system smbgroup` add samba group\
+`sudo useradd --system --no-create-home --group smbgroup -s /bin/false smbuser` add samba user on the server\
+`sudo mkdir -p /share/public_files /share/protected_files` create public and protected folders\
+`sudo chown -R smbuser:smbgroup /share/public_files` change user and group ownership\
+`sudo chmod -R g+w /share` modify group level permission to write\
+`sudo systemctl start smdb` start samba\
 
-`sudo systemctl stop smbd` stop samba
-
-`sudo groupadd --system smbgroup` add samba group
-
-`sudo useradd --system --no-create-home --group smbgroup -s /bin/false smbuser` add samba user on the server
-
-`sudo mkdir -p /share/public_files /share/protected_files` create public and protected folders
-
-`sudo chown -R smbuser:smbgroup /share` change user and group ownership
-
-`sudo chmod -R g+w /share` modify group level permission to write
-
-`sudo systemctl start smdb` start samba
-
-
-create `smb.conf` and `shares.conf` in /etc/samba/
+create `smb.conf` and `shares.conf` in /etc/samba/\
 > Note! rename existing smb.conf to smb.conf.bak
 
 
