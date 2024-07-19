@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis-deployment
+  labels:
+    name: redis-deployment
+    app: demo-voting-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: redis-deployment
+      app: demo-voting-app
+  template:
+    metadata:
+      name: redis-deployment
+      labels:
+        name: redis-deployment
+        app: demo-voting-app
+    spec:
+      containers:
+        - name: redis
+          image: redis:alpine
+          volumeMounts:
+          - name: redis-data
+            mountPath: /data
+      volumes:
+      - name: redis-data
+        emptyDir: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+ name: db-deployment
+ labels:
+  name: db-service
+  app: demo-voting-app 
+spec:
+ ports:
+  - port: 6379
+    targetPort: 6379
+
+ selector:
+  name: db-deployment
+  labels:
+    name: db-deployment
+    app: demo-voting-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: db-deployment
+      app: demo-voting-app
+  template:
+    metadata:
+      name: db-deployment
+      labels:
+        name: db-deployment
+        app: demo-voting-app
+    spec:
+      containers:
+        - name: redis
+          image: postgres:9.4
+          volumeMounts:
+          - name: db-data
+            mountPath: /var/lib/postgresql/data
+          - env:
+            - name: POSTGRES_USER
+              value: "postgres"
+            - name: POSTGRES_PASSWORD
+              value: "postgres"
+            - name: POSTGRES_HOST_AUTH_METHOD
+              value: trust 
+      volumes:
+      - name: db-data
+        emptyDir: {}
+
+---
+
